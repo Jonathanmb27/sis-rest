@@ -30,12 +30,12 @@ public class TrabajoController {
     //@ResponseBody
     @ResponseStatus(HttpStatus.OK)
     //@RequestMapping(path = "/list", method = RequestMethod.GET)
-    @GetMapping(value = "list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Trabajo> list(){
           return   trabajoRepo.findAll();
     }
 
-    @GetMapping(path = "list/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Trabajo findbyId(@PathVariable long id){
         Optional<Trabajo> trabajo=trabajoRepo.findById(id);
