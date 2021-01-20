@@ -41,7 +41,7 @@ public class WebConfig implements WebMvcConfigurer, WebApplicationInitializer {
     * este es un bean convertidos y se tenia que declarar explicitamente en versiones
     * anteriores
     * */
-    @Bean
+    /*@Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(){
         MappingJackson2HttpMessageConverter converter=new MappingJackson2HttpMessageConverter();
         converter.setObjectMapper(objectMapper());
@@ -53,7 +53,7 @@ public class WebConfig implements WebMvcConfigurer, WebApplicationInitializer {
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return objectMapper;
-    }
+    }*/
 
     @Override
     public void onStartup(javax.servlet.ServletContext servletContext) throws ServletException {
