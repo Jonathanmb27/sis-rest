@@ -65,4 +65,40 @@ public class WebConfig implements WebMvcConfigurer, WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
     }
+
+
+
+
+
+    /*
+    * Una vez que esta biblioteca está en la ruta de clases,
+    * esta biblioteca se registra automáticamente y se utilizará
+    * para convertir instancias de LocalDateTime anotadas a la
+    * representación JSON adecuada si la configuración está
+    * establecida para eso. En la clase WebConfig, se debe
+    * agregar y configurar un bean de tipo ObjectMapper para
+    * admitir módulos que proporcionan convertidores especiales.
+    * */
+    /*
+    * En la configuración anterior se llamó al método
+    * objMapper.findAndRegisterModules (), que es un método
+    * conveniente que escanea y registra todos los módulos
+    * en la ruta de clases.
+     * */
+
+    /*
+    * Una vez que la configuración está en su lugar,
+    * los campos de la entidad deben anotarse con @JsonFormat,
+    * para que puedan identificarse en el momento de la
+    * serialización y convertirse según se haya configurado
+    * page 362
+    * */
+    @Bean
+    public ObjectMapper objectMapper(){
+        ObjectMapper objectMapper=new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.findAndRegisterModules();
+        return objectMapper;
+    }
 }
