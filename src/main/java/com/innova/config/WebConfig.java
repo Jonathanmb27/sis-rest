@@ -31,7 +31,9 @@ import javax.servlet.ServletRegistration;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.innova.controller")
 public class WebConfig implements WebMvcConfigurer, WebApplicationInitializer {
-
+    /*
+    * configuracion 369
+    * */
 
     /*
     * dar formato a las fechas jsonformat page 363

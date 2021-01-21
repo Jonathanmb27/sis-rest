@@ -8,18 +8,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
 public class Trabajo extends AbstractEntity{
 
-    @JsonIgnore
+   // @JsonIgnore
     @Column(name = "RUBRO")
     private String rubroTrabajo;
     @Column(name = "DIRECCION")
     private String direccionTrabajo;
     @Column(name = "TELEFONO")
-    @NotNull(groups = BasicValidation.class)
+   // @NotNull(groups = BasicValidation.class)
+    @Size(min = 10,groups = {BasicValidation.class})
     private String telefonoTrabajo;
 
 
@@ -36,8 +38,8 @@ public class Trabajo extends AbstractEntity{
     * */
 
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING,
-    pattern = DateProcessor.DATE_FORMAT)
+   /* @JsonFormat(shape = JsonFormat.Shape.STRING,
+    pattern = DateProcessor.DATE_FORMAT)*/
     @Transient
     @JsonIgnore
     private LocalDateTime fechaCreada;
