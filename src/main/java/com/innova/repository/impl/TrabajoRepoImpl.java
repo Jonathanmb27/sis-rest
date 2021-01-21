@@ -24,10 +24,12 @@ public class TrabajoRepoImpl  extends AbstractRepoImpl<Trabajo> implements Traba
     }
     @Override
     public Optional<Trabajo> findByPhone(String phone) {
-        
         String sql="select id, direccion, rubro,telefono from trabajo where telefono=?";
-
-        return Optional.of(jdbcTemplate.queryForObject(sql,rowMapper,phone));
+        try{
+            return Optional.of(jdbcTemplate.queryForObject(sql,rowMapper,phone));
+        }catch (Exception e){
+           return Optional.empty();
+        }
     }
 
     @Override

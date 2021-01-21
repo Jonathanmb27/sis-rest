@@ -3,10 +3,12 @@ package com.innova.controller;
 import com.innova.domain.Trabajo;
 import com.innova.problem.IllegalOperation;
 import com.innova.problem.NotFoundException;
+import com.innova.problem.TrabajoException;
 import com.innova.repository.TrabajoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -53,7 +55,11 @@ public class TrabajoController {
     public Trabajo findbyId(@PathVariable long id){
         Optional<Trabajo> trabajo=trabajoRepo.findById(id);
         if(trabajo.isPresent()) return trabajo.get();
-        else throw new NotFoundException(Trabajo.class,id);
+        /*
+        * remplazdo este codido por TrabajoException
+        * */
+       // else throw new NotFoundException(Trabajo.class,id);
+        else throw new TrabajoException(HttpStatus.NOT_FOUND,"Unable to find entry whit id: "+id);
     }
 
 
@@ -67,17 +73,19 @@ public class TrabajoController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
             consumes =MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Trabajo create(@Validated(Trabajo.BasicValidation.class) @RequestBody  Trabajo trabajo, BindingResult result){
-        if(!result.hasErrors()){
+    public Trabajo create(@Validated(Trabajo.BasicValidation.class) @RequestBody  Trabajo trabajo, BindingResult result) {
+        if (!result.hasErrors()) {
             trabajoRepo.save(trabajo);
-            System.out.println("Correcto!!");
             return trabajo;
-        }else{
-            System.out.println("Error");
-            throw new IllegalOperation("Can not save entry because: "+result);}
+        } else {
+            /*
+             * remplazdo este codido por TrabajoException
+             * */
+            //throw new IllegalOperation("Can not save entry because: "+result);}
+            throw new TrabajoException(HttpStatus.BAD_REQUEST, "Cannot save entry "+result);
+        }
+
     }
-
-
     /*
     * update
     * */
@@ -93,21 +101,31 @@ public class TrabajoController {
     /*
     * find by phone
     * */
-    @GetMapping(path = "/phone/{phone}")
+    @GetMapping(path = "/phone/{phone}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Map<String,Object> findPhoneAsMap(@PathVariable String phone){
-        return trabajoRepo.findPhoneAsMap(phone);
+    public Trabajo findPhoneAsMap(@PathVariable String phone){
+        Optional<Trabajo> trabajo=trabajoRepo.findByPhone(phone);
+        if(trabajo.isPresent())
+            return trabajo.get();
+        //else throw new NotFoundException(Trabajo.class, Long.parseLong(phone));
+        else throw new TrabajoException(HttpStatus.NOT_FOUND,"Unable to find entry whit phone: "+phone);
     }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    /**************************************************************************/
+    /*
+    * version mejorada en RestExceptionHandler.class
+    * */
+    /*@ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({NotFoundException.class})
-    public void handleNotFound(){
+    public ResponseEntity<String> handleNotFound(Exception e){
         //just return empty 404
+        return new ResponseEntity<>("Unexpected Exception: "+e.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalOperation.class})
     public void handleIllegalOperation(){
         //just return empty 400
-    }
+    }*/
+
 }

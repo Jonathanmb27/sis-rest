@@ -29,7 +29,7 @@ import javax.servlet.ServletRegistration;
 * de mensajes en aplicaciones configuradas con:
 * */
 @EnableWebMvc
-@ComponentScan(basePackages = "com.innova.controller")
+@ComponentScan(basePackages = {"com.innova.controller","com.innova.problem"})
 public class WebConfig implements WebMvcConfigurer, WebApplicationInitializer {
     /*
     * configuracion 369
