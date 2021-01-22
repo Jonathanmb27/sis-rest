@@ -15,6 +15,12 @@ public class Cancelado extends AbstractEntity{
     @ManyToOne
     private Inquilino inquilino;
 
+    /*
+    * campo solo para jdbcTemplate
+    * */
+    @Transient
+    private long inquilinoId;
+
     public int getMontoCancelado() {
         return montoCancelado;
     }
@@ -29,5 +35,21 @@ public class Cancelado extends AbstractEntity{
 
     public void setFechaCancelado(LocalDate fechaCancelado) {
         this.fechaCancelado = fechaCancelado;
+    }
+
+    public Inquilino getInquilino() {
+        return inquilino;
+    }
+
+    public void setInquilino(Inquilino inquilino) {
+        this.inquilino = inquilino;
+    }
+
+    public long getInquilinoId() {
+        return inquilinoId;
+    }
+
+    public void setInquilinoId(long inquilinoId) {
+        this.inquilinoId = inquilinoId;
     }
 }

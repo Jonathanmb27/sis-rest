@@ -1,5 +1,8 @@
 package com.innova.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.innova.util.DateProcessor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.time.LocalDate;
@@ -11,6 +14,9 @@ public class Habitacion extends AbstractEntity {
     private String nombreHabitacion;
     @Column(name = "PRECIO")
     private int precioHabitacion;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,
+            pattern = DateProcessor.DATE_FORMAT)
     @Column(name = "FECHA_INGRESO")
     private LocalDate fechaIngreso;
 

@@ -58,7 +58,7 @@ public class RestExceptionsHandler {
         String errorUrl=request.getRequestURL().toString();
         if(e instanceof TrabajoException){
             TrabajoException trabajoException=(TrabajoException) e;
-            return new ResponseEntity<>(new JsonError(errorUrl,e.getMessage()),((TrabajoException) e).getHttpStatus());
+            return new ResponseEntity<>(new JsonError(errorUrl,e.getMessage()),trabajoException.getHttpStatus());
         }else{
             return new ResponseEntity<>(new JsonError(errorUrl,
                     "Unexpected Exception1: "+e.getMessage()),
