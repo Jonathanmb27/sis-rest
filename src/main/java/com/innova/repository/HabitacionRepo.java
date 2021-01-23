@@ -9,5 +9,5 @@ public interface HabitacionRepo extends AbstractRepo<Habitacion>{
 
 
     List<Habitacion> findAll();
-    Optional<Habitacion> update();
+    Optional<Habitacion> update(Habitacion entity);
 }
