@@ -7,6 +7,7 @@ import com.innova.config.template.JdbcTemplateConfig;
 import com.innova.config.template.TestDBConfig;
 import com.innova.repository.InquilinoRepo;
 import com.innova.repository.TrabajoRepo;
+import com.innova.service.HabitacionService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,22 +19,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = JdbcTemplateConfig.class)
-@ActiveProfiles("jdbc")
+//@ActiveProfiles("jdbc")
 public class AppTest {
 
 
 
     @Autowired
-    TrabajoRepo trabajoRepo;
+    HabitacionService habitacionService;
 
     @Before
     public void setUp(){
-        assertNotNull(trabajoRepo);
+        assertNotNull(habitacionService);
 
     }
     @Test
     public void verificarNotNull(){
-
+        habitacionService.findAll().forEach(s-> System.out.println(s.getPrecioHabitacion()));
     }
 
 }
